@@ -23,4 +23,4 @@ Thumbs.db
 npm-debug.log*
 
 # Misc
-*.local
+*.local.claude/
