@@ -12,7 +12,6 @@ import { analyzeValidationRules, validate } from '../middleware/validation.js';
 import { analysisLimiter } from '../middleware/rateLimiter.js';
 import { analyzeSentiment, checkApiHealth } from '../services/huggingFaceService.js';
 import { recordAnalysis, getStats } from '../utils/stats.js';
-import { ApiError } from '../types/index.js';
 
 // Create router instance
 // Router acts like a mini-app, allowing us to group routes
@@ -24,7 +23,7 @@ const router = Router();
  * Health check endpoint for monitoring and load balancers.
  * Returns server status and uptime information.
  */
-router.get('/health', async (req: Request, res: Response) => {
+router.get('/health', async (_req: Request, res: Response) => {
   // Check external API health
   const hfHealthy = await checkApiHealth();
 
@@ -45,7 +44,7 @@ router.get('/health', async (req: Request, res: Response) => {
  * Returns usage statistics.
  * Useful for monitoring and dashboards.
  */
-router.get('/stats', (req: Request, res: Response) => {
+router.get('/stats', (_req: Request, res: Response) => {
   const stats = getStats();
   res.json(stats);
 });

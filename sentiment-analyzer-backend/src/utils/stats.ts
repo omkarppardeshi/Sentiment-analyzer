@@ -25,8 +25,9 @@ const stats: Stats = {
 /**
  * Record an analysis result
  * Mutates the stats object directly (side effect)
+ * NEUTRAL is counted as negative for simplicity
  */
-export function recordAnalysis(label: 'POSITIVE' | 'NEGATIVE', score: number): void {
+export function recordAnalysis(label: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL', score: number): void {
   stats.totalRequests++;
   stats.confidenceSum += score;
 

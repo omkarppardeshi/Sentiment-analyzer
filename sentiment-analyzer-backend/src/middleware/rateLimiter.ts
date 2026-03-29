@@ -33,7 +33,7 @@ export const apiLimiter = rateLimit({
     return req.ip || req.socket.remoteAddress || 'unknown';
   },
   // Custom handler for when limit is exceeded
-  handler: (req: Request, res: Response): void => {
+  handler: (_req: Request, res: Response): void => {
     res.status(429).json({
       error: 'Too Many Requests',
       message: 'Rate limit exceeded. Please try again in 15 minutes.',

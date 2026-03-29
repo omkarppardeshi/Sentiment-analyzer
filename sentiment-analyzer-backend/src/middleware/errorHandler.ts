@@ -8,7 +8,6 @@
  */
 
 import { Request, Response, NextFunction } from 'express';
-import { ApiError, isApiError } from '../types/index.js';
 
 /**
  * Not Found Handler
@@ -19,7 +18,7 @@ import { ApiError, isApiError } from '../types/index.js';
 export function notFoundHandler(
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ): void {
   res.status(404).json({
     error: 'Not Found',
@@ -37,19 +36,21 @@ export function notFoundHandler(
  */
 export function errorHandler(
   err: unknown,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ): void {
   // Log error for debugging (in production, use proper logging)
   console.error('Error:', err);
 
-  // Handle ApiError instances with proper status codes
-  if (isApiError(err)) {
-    res.status(err.statusCode).json({
-      error: err.message,
-      message: err.message,
-      statusCode: err.statusCode,
+  // Handle ApiError-like objects with statusCode property
+  if (typeof err === 'object' && err !== null && 'statusCode' in err) {
+    const statusCode = (err as { statusCode: number }).statusCode;
+    const message = err instanceof Error ? err.message : 'Error';
+    res.status(statusCode).json({
+      error: message,
+      message,
+      statusCode,
     });
     return;
   }
