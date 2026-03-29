@@ -90,9 +90,12 @@ export default function HomePage() {
       <div className="container mx-auto max-w-6xl px-4 py-4 sm:py-8">
         {/* Header */}
         <header className="mb-6 sm:mb-8 text-center">
-          <h1 className="mb-2 text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
-            Sentiment Analyzer
-          </h1>
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <img src="/logo.png" alt="Logo" className="h-12 w-12 sm:h-16 sm:w-16" />
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
+              Sentiment Analyzer
+            </h1>
+          </div>
           <p className="text-xs sm:text-sm text-muted-foreground">
             Powered by AI - Analyze the emotional tone of any text
           </p>

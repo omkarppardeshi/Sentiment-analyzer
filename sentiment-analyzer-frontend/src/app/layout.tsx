@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   description: 'Analyze sentiment of text using AI',
   keywords: ['sentiment analysis', 'AI', 'machine learning', 'NLP'],
   authors: [{ name: 'Sentiment Analyzer Team' }],
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     title: 'Sentiment Analyzer',
     description: 'Analyze sentiment of text using AI',
