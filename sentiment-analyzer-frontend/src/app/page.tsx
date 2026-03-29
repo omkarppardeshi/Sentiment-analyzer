@@ -89,21 +89,26 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       <div className="container mx-auto max-w-6xl px-4 py-4 sm:py-8">
         {/* Header */}
-        <header className="mb-6 sm:mb-8 text-center">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <img src="/logo.png" alt="Logo" className="h-12 w-12 sm:h-16 sm:w-16" />
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
+        <header className="mb-6 sm:mb-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="h-10 w-10 sm:h-14 sm:w-14 object-contain"
+              style={{ imageRendering: 'auto' }}
+            />
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
               Sentiment Analyzer
             </h1>
           </div>
-          <p className="text-xs sm:text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-muted-foreground text-center">
             Powered by AI - Analyze the emotional tone of any text
           </p>
         </header>
 
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
           {/* Left Column - Input and Results */}
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
             {/* Input Card */}
             <Card>
               <CardHeader>
@@ -122,7 +127,7 @@ export default function HomePage() {
                     placeholder="Type or paste your text here..."
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    className={`min-h-[120px] sm:min-h-[150px] ${isOverLimit ? 'border-destructive' : ''}`}
+                    className={`min-h-[120px] sm:min-h-[150px] resize-none ${isOverLimit ? 'border-destructive' : ''}`}
                     disabled={state.status === 'loading'}
                   />
                   {/* Character counter */}
@@ -134,17 +139,16 @@ export default function HomePage() {
                 </div>
 
                 {/* Action buttons */}
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   <Button
                     onClick={handleAnalyze}
                     disabled={state.status === 'loading' || !text.trim() || isOverLimit}
-                    className="flex-1 text-sm"
+                    className="flex-1 min-w-[120px] text-sm"
                   >
                     {state.status === 'loading' ? (
                       <>
                         <Loader2 className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
-                        <span className="hidden sm:inline">Analyzing...</span>
-                        <span className="sm:hidden">...</span>
+                        <span>Analyzing...</span>
                       </>
                     ) : (
                       <>
@@ -154,7 +158,15 @@ export default function HomePage() {
                     )}
                   </Button>
                   {state.status !== 'idle' && (
-                    <Button variant="outline" size="sm" onClick={reset}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setText('');
+                        reset();
+                      }}
+                      className="min-w-[60px]"
+                    >
                       Clear
                     </Button>
                   )}
@@ -239,7 +251,10 @@ export default function HomePage() {
                   <p className="text-sm text-destructive">{state.error}</p>
                   <Button
                     variant="outline"
-                    onClick={reset}
+                    onClick={() => {
+                      setText('');
+                      reset();
+                    }}
                     className="mt-4"
                   >
                     Try Again
@@ -250,7 +265,7 @@ export default function HomePage() {
           </div>
 
           {/* Right Column - History and Stats */}
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-6 order-1 lg:order-2">
             {/* Stats Card */}
             <Card>
               <CardHeader>
@@ -260,7 +275,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-[140px] sm:h-[180px] flex items-center justify-center">
+                <div className="h-[140px] sm:h-[180px] flex items-center justify-center overflow-hidden">
                   <SentimentChart
                     positiveCount={positiveCount}
                     negativeCount={negativeCount}
@@ -312,7 +327,7 @@ export default function HomePage() {
                   </div>
                 ) : (
                   // History list
-                  <div className="space-y-2 sm:space-y-3 max-h-[300px] sm:max-h-[400px] overflow-y-auto">
+                  <div className="space-y-2 sm:space-y-3 max-h-[250px] sm:max-h-[300px] overflow-y-auto">
                     {history
                       .slice()
                       .reverse()
