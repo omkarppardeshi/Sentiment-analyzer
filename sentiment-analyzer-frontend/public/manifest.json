@@ -1,0 +1,17 @@
+{
+  "name": "Sentiment Analyzer",
+  "short_name": "Sentiment",
+  "description": "Analyze sentiment of text using AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
